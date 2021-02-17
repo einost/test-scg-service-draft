@@ -20,7 +20,7 @@
     "mongoose": "^5.11.15",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
-    "test-scg-sdk": "git+https://github.com/einost/test-scg-sdk.git#master",
+    "test-scg-sdk": "git+https://github.com/einost/test-scg-sdk.git#develop",
     "uuid": "^8.3.2"
   }
 }
