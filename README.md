@@ -33,4 +33,4 @@ $ pm2 start server.json && pm2 logs
 - POST /api/auth/refresh-token
 - GET /api/vending-machine/get-list
 - POST /api/vending-machine/get-stock-list
-- POST /api/vending-machine/payment'
+- POST /api/vending-machine/payment
