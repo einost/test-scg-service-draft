@@ -117,14 +117,6 @@ const vendingMachinePayment = async (req, res) => {
     if (!product) {
       return res.boom.notFound(`not found vending machine by ${productId}`)
     }
-    /** 
-     * ====================================
-     * ========== Payement Logic ==========
-     * ====================================
-     * 
-     * ...do something
-     * 
-     */
     let stock = await Stock.findOne({
       vendingMachineId,
       productId
@@ -134,6 +126,14 @@ const vendingMachinePayment = async (req, res) => {
         return res.boom.badData('product out of stock')
       }
       stock = await Stock.update(stock._id, { quantity: stock.quantity - 1 })
+      /** 
+       * ====================================
+       * ========== Payement Logic ==========
+       * ====================================
+       * 
+       * ...do something
+       * 
+       */
     }
     const stockList = await Stock.find({ vendingMachineId })
     let allQuantity = 0
