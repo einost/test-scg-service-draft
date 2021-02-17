@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const JWT = require('jsonwebtoken')
-const Constants = require('./constants')
 
 const database = {
   connect: async (dbAddress) => {
@@ -26,22 +24,6 @@ const database = {
   }
 }
 
-const verifyAuth = (req, res, next) => {
-  try {
-    const decoded = JWT.verify(req.headers.authorization, Constants.SECRET_KEY)
-    const { vendingMachineId, email } = decoded
-    if (!vendingMachineId && !email) {
-      res.boom.unauthorized()
-    }
-    req.credentials = decoded
-    next()
-  } catch (error) {
-    console.log(error)
-    res.boom.unauthorized()
-  }
-}
-
 module.exports = {
-  database,
-  verifyAuth
+  database
 }

@@ -1,11 +1,14 @@
 const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
-const logger = require('morgan')
 const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const boom = require('express-boom-v2')
+const logger = require('morgan')
 const app = express()
+
+const bodyParser = require('body-parser')
+const boom = require('express-boom-v2')
+const cors = require('cors')
+const uuid = require('uuid')
 const Config = require('./src/config')
 const Constants = require('./src/constants')
 
@@ -13,16 +16,45 @@ const Constants = require('./src/constants')
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(boom())
+app.use(
+  logger(function (tokens, req, res) {
+    if (tokens.method(req, res) === 'OPTIONS') {
+      return ''
+    }
+    const id = uuid.v4()
+    const newLine = '*\n*\n*'
+    const startDate = new Date()
+    startDate.setMilliseconds(startDate.getMilliseconds() - parseInt(tokens['response-time'](req, res)))
+    const endDate = new Date()
+    return [
+      `========== [${startDate.toISOString()}] --> ${id} ==========`,
+      newLine,
+      `url: ${tokens.url(req, res)}`,
+      `method: ${tokens.method(req, res)}`,
+      `headers: ${JSON.stringify({
+        authorization: req.headers.authorization || "none"
+      }, null, 2)}`,
+      `body: ${JSON.stringify({
+        ...req.body,
+        password: 'detected to remove'
+      }, null, 2)}`,
+      `status: ${tokens.status(req, res)}`,
+      newLine,
+      `========== [${endDate.toISOString()}] --> ${id} ==========`,
+    ].join('\n')
+  })
+)
 app.use(cookieParser())
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(boom())
 app.use(cors())
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 // routes
-require('./src/routes/index')(app)
+require('./src/routes')(app)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -31,6 +63,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}

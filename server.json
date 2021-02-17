@@ -1,15 +1,15 @@
 {
   "apps": [
     {
-      "name": "test-scg-service",
+      "name": "test-scg-service-draft",
       "script": "app.js",
       "exec_mode": "fork",
       "watch": true,
       "instances": 1,
       "interpreter": "node",
-      "error_file": "/home/scg/test-scg-service/logs/test-scg-service.log",
-      "out_file": "/home/scg/test-scg-service/logs/test-scg-service.log",
-      "pid_file": "/home/scg/test-scg-service/logs/test-scg-service.log",
+      "error_file": "/home/scg/test-scg-service-draft/logs/test-scg-service-draft.log",
+      "out_file": "/home/scg/test-scg-service-draft/logs/test-scg-service-draft.log",
+      "pid_file": "/home/scg/test-scg-service-draft/logs/test-scg-service-draft.log",
       "merge_logs": true,
       "env": {
         "NODE_ENV": "development",
