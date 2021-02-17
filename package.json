@@ -1,6 +1,6 @@
 {
   "name": "test-scg-service-draft",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -20,7 +20,7 @@
     "mongoose": "^5.11.15",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
-    "test-scg-sdk": "git+https://github.com/einost/test-scg-sdk.git#develop",
+    "test-scg-sdk": "git+https://github.com/einost/test-scg-sdk.git#master",
     "uuid": "^8.3.2"
   }
 }
